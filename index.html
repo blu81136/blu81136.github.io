@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blu - Portfolio</title>
+    <style>
+      body {
+        margin: 0;
+        background: #0a0a0a;
+      }
+      .grid {
+        position: relative;
+      }
+      .grid img {
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      <img src="./images/20260405.webp">
+      <img src="./images/20260330.webp">
+      <img src="./images/20260329.webp">
+      <img src="./images/20260325.webp">
+      <img src="./images/20260114.webp">
+      <img src="./images/20260105.webp">
+      <img src="./images/20260102.webp">
+      <img src="./images/20251229b.webp">
+      <img src="./images/20251227.webp">
+      <img src="./images/20251222.webp">
+      <img src="./images/20251220.webp">
+      <img src="./images/20251219.webp">
+      <img src="./images/20251212.webp">
+      <img src="./images/20251202c.webp">
+      <img src="./images/20251202b.webp">
+      <img src="./images/20251202.webp">
+      <img src="./images/20251126.webp">
+      <img src="./images/20251112.webp">
+      <img src="./images/20251027.webp">
+      <img src="./images/20251016.webp">
+      <img src="./images/20251013.webp">
+      <img src="./images/20251011d.webp">
+      <img src="./images/20250817.webp">
+      <img src="./images/20250816.webp">
+      <img src="./images/20250725.webp">
+      <img src="./images/20250715.webp">
+      <img src="./images/20250713.webp">
+      <img src="./images/20250708.webp">
+      <img src="./images/20250624.webp">
+      <img src="./images/20250606.webp">
+      <img src="./images/20250604.webp">
+      <img src="./images/20250531.webp">
+    </div>
+    <script>
+      function layout() {
+        const grid = document.querySelector('.grid');
+        const imgs = [...grid.querySelectorAll('img')];
+        const cols = 3;
+        const gap = 4;
+        const colW = (grid.clientWidth - gap * (cols - 1)) / cols;
+        const colH = new Array(cols).fill(0);
+
+        imgs.forEach(img => {
+          const shortest = colH.indexOf(Math.min(...colH));
+          const ratio = img.naturalHeight / img.naturalWidth || 1;
+          const h = colW * ratio;
+
+          img.style.width = colW + 'px';
+          img.style.left = shortest * (colW + gap) + 'px';
+          img.style.top = colH[shortest] + 'px';
+
+          colH[shortest] += h + gap;
+        });
+
+        grid.style.height = Math.max(...colH) + 'px';
+      }
+
+      let loaded = 0;
+      const imgs = document.querySelectorAll('.grid img');
+      imgs.forEach(img => {
+        if (img.complete) { loaded++; }
+        else { img.addEventListener('load', () => { loaded++; if (loaded === imgs.length) layout(); }); }
+      });
+      if (loaded === imgs.length) layout();
+
+      window.addEventListener('resize', layout);
+    </script>
+  </body>
+</html>
